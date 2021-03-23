@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Classname OkToolsController
@@ -58,8 +59,8 @@ public class OkToolsController {
     }
 
     @RequestMapping(value = "/ip", method = RequestMethod.GET)
-    public String ip(Model model) {
-        model.addAttribute("ip", IpUtil.getV4IP());
+    public String ip(HttpServletRequest request, Model model) {
+        model.addAttribute("ip", IpUtil.getIpAddr(request));
         return "ip";
     }
 
