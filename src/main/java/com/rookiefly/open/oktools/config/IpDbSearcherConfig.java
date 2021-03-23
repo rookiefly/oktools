@@ -1,10 +1,13 @@
 package com.rookiefly.open.oktools.config;
 
+import org.apache.commons.io.FileUtils;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.File;
 
 /**
  * @Classname IpDbSearcherConfig
@@ -15,12 +18,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IpDbSearcherConfig {
 
-    @Value("${oktools.ip2region-db-path:/Users/rookiefly/oktools/data/ip2region.db}")
-    private String dbPath;
-
     @Bean
     public DbSearcher dbSearcher() throws Exception {
+        ClassPathResource classPathResource = new ClassPathResource("ip2region.db");
+        File tempFile = File.createTempFile("tmp_ip2region", ".db");
+        FileUtils.copyInputStreamToFile(classPathResource.getInputStream(), tempFile);
         DbConfig dbConfig = new DbConfig();
-        return new DbSearcher(dbConfig, dbPath);
+        return new DbSearcher(dbConfig, tempFile.getPath());
     }
 }
