@@ -1,15 +1,8 @@
 package com.rookiefly.open.oktools.util;
 
-import org.lionsoul.ip2region.DataBlock;
-import org.lionsoul.ip2region.DbConfig;
-import org.lionsoul.ip2region.DbSearcher;
-import org.lionsoul.ip2region.Util;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -120,39 +113,6 @@ public class IpUtil {
     }
 
     /**
-     * 解析ip地址
-     */
-    public static String getIpInfo(String ip) throws Exception {
-        URL dbUrl = ClassLoader.getSystemResource("ip2region.db");
-        if (dbUrl == null) {
-            throw new FileNotFoundException("Error: Invalid ip2region.db file");
-        }
-        int algorithm = DbSearcher.BTREE_ALGORITHM;
-        DbConfig config = new DbConfig();
-        DbSearcher searcher = new DbSearcher(config, dbUrl.getFile());
-        Method method = null;
-        switch (algorithm) {
-            case DbSearcher.BTREE_ALGORITHM:
-                method = searcher.getClass().getMethod("btreeSearch", String.class);
-                break;
-            case DbSearcher.BINARY_ALGORITHM:
-                method = searcher.getClass().getMethod("binarySearch", String.class);
-                break;
-            case DbSearcher.MEMORY_ALGORITYM:
-                method = searcher.getClass().getMethod("memorySearch", String.class);
-                break;
-            default:
-                break;
-        }
-        if (!Util.isIpAddress(ip)) {
-            System.out.println("Error: Invalid ip address");
-            return null;
-        }
-        DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
-        return dataBlock.getRegion();
-    }
-
-    /**
      * 测试方法
      * 获取本机的内网ip，外网ip和指定ip的地址
      *
@@ -166,15 +126,5 @@ public class IpUtil {
         System.out.println("内网ip:" + ip1);
         String ip2 = IpUtil.getV4IP();
         System.out.println("外网ip:" + ip2);
-
-        String ipInfo = getIpInfo(ip2);
-        System.out.println(ipInfo);
-        String[] splitIpInfo = ipInfo.split("\\|");
-        String province = splitIpInfo[2];
-        String city = splitIpInfo[3];
-        String carrier = splitIpInfo[4];
-        System.out.println(province);
-        System.out.println(city);
-        System.out.println(carrier);
     }
 }

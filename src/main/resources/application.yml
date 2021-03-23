@@ -31,3 +31,6 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.rookiefly.open.oktools.model
+
+oktools:
+  ip2region-db-path: /Users/rookiefly/oktools/data/ip2region.db

@@ -3,10 +3,12 @@ package com.rookiefly.open.oktools.service.impl;
 import com.rookiefly.open.oktools.mapper.ToolMapper;
 import com.rookiefly.open.oktools.model.Tool;
 import com.rookiefly.open.oktools.service.OkToolsService;
-import com.rookiefly.open.oktools.util.IpUtil;
 import com.rookiefly.open.oktools.vo.IpInfo;
+import org.lionsoul.ip2region.DataBlock;
+import org.lionsoul.ip2region.DbSearcher;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +25,9 @@ public class OkToolsServiceImpl implements OkToolsService {
     @Resource
     private ToolMapper toolMapper;
 
+    @Resource
+    private DbSearcher dbSearcher;
+
     @Override
     @Cacheable(value = "toolsCache", key = "targetClass + methodName")
     public List<Tool> queryToolsList() {
@@ -33,7 +38,11 @@ public class OkToolsServiceImpl implements OkToolsService {
     @Cacheable(value = "ipInfoCache", key = "targetClass + methodName + #ip")
     public IpInfo queryInInfo(String ip) {
         try {
-            String ipInfo = IpUtil.getIpInfo(ip);
+            DataBlock dataBlock = dbSearcher.btreeSearch(ip);
+            if (dataBlock == null || !StringUtils.hasText(dataBlock.getRegion())) {
+                return null;
+            }
+            String ipInfo = dataBlock.getRegion();
             String[] splitIpInfo = ipInfo.split("\\|");
             IpInfo ipInfoVO = new IpInfo();
             ipInfoVO.setIp(ip);
