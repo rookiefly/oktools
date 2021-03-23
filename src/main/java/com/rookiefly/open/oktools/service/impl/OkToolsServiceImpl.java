@@ -4,7 +4,7 @@ import com.rookiefly.open.oktools.mapper.ToolMapper;
 import com.rookiefly.open.oktools.model.Tool;
 import com.rookiefly.open.oktools.service.OkToolsService;
 import com.rookiefly.open.oktools.util.IpUtil;
-import com.rookiefly.open.oktools.vo.IpInfoVO;
+import com.rookiefly.open.oktools.vo.IpInfo;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +31,11 @@ public class OkToolsServiceImpl implements OkToolsService {
 
     @Override
     @Cacheable(value = "ipInfoCache", key = "targetClass + methodName + #ip")
-    public IpInfoVO queryInInfo(String ip) {
+    public IpInfo queryInInfo(String ip) {
         try {
             String ipInfo = IpUtil.getIpInfo(ip);
             String[] splitIpInfo = ipInfo.split("\\|");
-            IpInfoVO ipInfoVO = new IpInfoVO();
+            IpInfo ipInfoVO = new IpInfo();
             ipInfoVO.setIp(ip);
             ipInfoVO.setProvince(splitIpInfo[2]);
             ipInfoVO.setCity(splitIpInfo[3]);

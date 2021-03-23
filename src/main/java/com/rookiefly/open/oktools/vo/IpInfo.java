@@ -9,7 +9,7 @@ import lombok.Data;
  * @Created by rookiefly
  */
 @Data
-public class IpInfoVO {
+public class IpInfo {
 
     private String ip;
 

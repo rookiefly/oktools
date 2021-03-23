@@ -1,7 +1,7 @@
 package com.rookiefly.open.oktools.service;
 
 import com.rookiefly.open.oktools.model.Tool;
-import com.rookiefly.open.oktools.vo.IpInfoVO;
+import com.rookiefly.open.oktools.vo.IpInfo;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface OkToolsService {
 
     List<Tool> queryToolsList();
 
-    IpInfoVO queryInInfo(String ip);
+    IpInfo queryInInfo(String ip);
 }
