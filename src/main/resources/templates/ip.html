@@ -35,18 +35,15 @@
             .then(res => res.json())
             .then(function (res) {
                 let table_list = '';
-                for (let k1 in res) {
-                    table_list += '<table class="table striped fullwidth mt-2"><tbody>';
-                    let item = res[k1];
-                    let data = item.data || item;
-                    for (let k2 in data) {
-                        let value = data[k2];
-                        if (value !== null) {
-                            table_list += `<tr><th>${k2}</th><td>${value}</td></tr>`
-                        }
+                table_list += '<table class="table striped fullwidth mt-2"><tbody>';
+                let data = res['data'];
+                for (let k1 in data) {
+                    let value = data[k1];
+                    if (value !== null) {
+                        table_list += `<tr><th>` + k1 + `</th><td>` + value + `</td></tr>`
                     }
-                    table_list += '</tbody></table>';
                 }
+                table_list += '</tbody></table>';
                 document.getElementById('table_list').innerHTML = table_list;
             }).catch(e => alert(e))
             .finally(function () {

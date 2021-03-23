@@ -24,7 +24,7 @@ spring:
     console:
       enabled: true
   cache:
-    cache-names: dictCache,cityCache
+    cache-names: ipInfoCache,toolsCache
     caffeine:
       spec: maximumSize=500,expireAfterAccess=600s
 

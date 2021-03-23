@@ -1,9 +1,9 @@
 package com.rookiefly.open.oktools.controller;
 
 import com.rookiefly.open.oktools.service.OkToolsService;
+import com.rookiefly.open.oktools.util.IpUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,14 +57,9 @@ public class OkToolsController {
         return "file_hash";
     }
 
-    @RequestMapping(value = "/ip/", method = RequestMethod.GET)
+    @RequestMapping(value = "/ip", method = RequestMethod.GET)
     public String ip(Model model) {
-        model.addAttribute("ip", "");
-        return "ip";
-    }
-
-    @RequestMapping(value = "/api/ip/{ipAddress}", method = RequestMethod.GET)
-    public String queryIp(@PathVariable String ipAddress) {
+        model.addAttribute("ip", IpUtil.getV4IP());
         return "ip";
     }
 

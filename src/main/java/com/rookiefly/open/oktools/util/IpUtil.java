@@ -87,7 +87,7 @@ public class IpUtil {
      * @return
      */
     public static String getV4IP() {
-        String chinaz = "http://ip.chinaz.com";
+        String chinaz = "http://ip.chinaz.com/?wscckey=9dd470f3cc727ec4_1616481449";
 
         StringBuilder inputLine = new StringBuilder();
         BufferedReader in = null;
@@ -116,7 +116,7 @@ public class IpUtil {
         if (m.find()) {
             return m.group(1);
         }
-        return null;
+        return "";
     }
 
     /**
