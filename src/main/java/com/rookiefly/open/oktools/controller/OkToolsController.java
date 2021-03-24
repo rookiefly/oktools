@@ -53,7 +53,7 @@ public class OkToolsController {
         return "hash";
     }
 
-    @RequestMapping(value = "/file_hash", method = RequestMethod.GET)
+    @RequestMapping(value = "/file-hash", method = RequestMethod.GET)
     public String filehash() {
         return "file_hash";
     }
