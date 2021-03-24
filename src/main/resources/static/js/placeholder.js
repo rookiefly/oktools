@@ -1,4 +1,4 @@
-const host = 'https://oktools.net';
+const host = 'http://tool.rookiefly.com';
 
 function preview(url) {
     document.getElementById('preview').setAttribute('href', url);
