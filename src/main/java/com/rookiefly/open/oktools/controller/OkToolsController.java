@@ -148,9 +148,4 @@ public class OkToolsController {
     public String pdf2img() {
         return "pdf2img";
     }
-
-    @RequestMapping(value = "/clocks", method = RequestMethod.GET)
-    public String clocks() {
-        return "clocks";
-    }
 }
