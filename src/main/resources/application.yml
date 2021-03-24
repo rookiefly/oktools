@@ -31,3 +31,13 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.rookiefly.open.oktools.model
+
+project:
+  version: v@project.version@
+  home: ${user.home}
+
+logging:
+  file:
+    name: ${project.home}/logs/oktools.log
+  level:
+    root: info
