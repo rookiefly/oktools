@@ -148,4 +148,9 @@ public class OkToolsController {
     public String pdf2img() {
         return "pdf2img";
     }
+
+    @RequestMapping("/clipboard")
+    public String textClipboard() {
+        return "clipboard";
+    }
 }

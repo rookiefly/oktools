@@ -11,8 +11,8 @@ spring:
     cache: false
     template-loader-path:
       - classpath:/templates
-    mvc:
-      static-path-pattern: /static/**
+  mvc:
+    static-path-pattern: /**
   datasource:
     data: classpath:sql/data.sql
     password: 123456
@@ -24,7 +24,7 @@ spring:
     console:
       enabled: true
   cache:
-    cache-names: ipInfoCache,toolsCache
+    cache-names: ipInfoCache,toolsCache,clipboardCache
     caffeine:
       spec: maximumSize=500,expireAfterAccess=600s
 
