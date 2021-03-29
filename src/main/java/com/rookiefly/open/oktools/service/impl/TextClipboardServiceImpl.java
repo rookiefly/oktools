@@ -29,16 +29,26 @@ public class TextClipboardServiceImpl implements TextClipboardService {
         String dbText = textClipboardMapper.queryTextByHash(hash);
         if (dbText == null) {
             long key = textClipboardMapper.insert(hash, encodeText);
-            if (key > 0) {
-                return ConversionUtil.encode(key);
-            }
+//            if (key > 0) {
+//                return ConversionUtil.encode(key);
+//            }
+        }
+        return hash;
+    }
+
+    @Override
+    @Cacheable(value = "clipboardCache", key = "targetClass + methodName + #hash")
+    public String queryTextByHash(String hash) {
+        String encodeText = textClipboardMapper.queryTextByHash(hash);
+        if (StringUtils.isNotBlank(encodeText)) {
+            return new String(Base64Utils.decodeFromUrlSafeString(encodeText));
         }
         return null;
     }
 
     @Override
     @Cacheable(value = "clipboardCache", key = "targetClass + methodName + #textId")
-    public String queryText(String textId) {
+    public String queryTextById(String textId) {
         long id = ConversionUtil.decode(textId);
         String encodeText = textClipboardMapper.queryTextById(id);
         if (StringUtils.isNotBlank(encodeText)) {

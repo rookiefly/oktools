@@ -6,9 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class TextClipboardController {
@@ -18,17 +19,18 @@ public class TextClipboardController {
     @Autowired
     private TextClipboardService textClipboardService;
 
-    @PostMapping("/clipboard")
-    public String saveText(@RequestParam String data) {
-        logger.info("save input text: {}", data);
-        String hash = textClipboardService.saveText(data);
-        return hash;
+    @GetMapping("/clipboard/share")
+    public String saveText(@RequestParam String text, HttpServletRequest request) {
+        logger.info("save input text: {}", text);
+        String hash = textClipboardService.saveText(text);
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
+        return String.format("%s/clipboard/%s", baseUrl, hash);
     }
 
-    @GetMapping("/clipboard/{textId}")
-    public String queryText(@PathVariable("textId") String textId) {
-        logger.info("query text id: {}", textId);
-        String content = textClipboardService.queryText(textId);
+    @GetMapping("/clipboard/{hash}")
+    public String queryText(@PathVariable("hash") String hash) {
+        logger.info("query hash: {}", hash);
+        String content = textClipboardService.queryTextByHash(hash);
         return content;
     }
 }

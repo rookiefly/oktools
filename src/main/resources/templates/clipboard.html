@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <title>TextClipboard</title>
+    <title>共享粘贴板 - 在线工具 - OKTools</title>
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/clipboard.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/primer.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="https://cdn.bootcss.com/font-awesome/5.10.0-11/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<!--<body id="body" contenteditable="true" style="height: -webkit-fill-available">-->
 <body>
+    <#include "aside.html" />
+    <main>
+        <div class="container">
+            <h1>共享粘贴板</h1>
+            <textarea id="area_input" class="textarea mt-2" rows="15"></textarea>
+            <div class="content-center mt-2">
+                <button class="button" id="copyButton" data-clipboard-target="#area_input">
+                    <i class="fa fa-copy"></i>
+                    <span>复制</span>
+                </button>
+                <button class="button" id="shareButton" onclick="share()">
+                    <i class="fa fa-arrow-down"></i>
+                    <span>分享</span>
+                </button>
+                <button class="button" onclick="cleanup()">清空</button>
+            </div>
+            <textarea id="area_output" class="textarea mt-2" rows="15"></textarea>
+        </div>
+    </main>
 
-<div id="example-action" class="example">
-    <div class="input-group">
-        <textarea id="txt" cols="200" rows="30" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-    </div>
-    <div class="form-actions">
-        <button class="btn" type="button" data-clipboard-demo="" data-clipboard-target="#txt">
-            Copy to clipboard
-        </button>
-    </div>
-</div>
+    <script type="text/javascript">
+        let area_input = document.getElementById('area_input');
+        let area_output = document.getElementById('area_output');
 
-<script type="text/javascript">
-    var clipboard = new ClipboardJS('.btn');
-    clipboard.on('success', function (e) {
-        console.log(e);
-    });
-    clipboard.on('error', function (e) {
-        console.log(e);
-    });
+        function cleanup() {
+            area_input.value = '';
+            area_output.value = '';
+        }
+        var clipboard = new ClipboardJS('#copyButton');
+        clipboard.on('success', function (e) {
+            console.log(e);
+        });
+        clipboard.on('error', function (e) {
+            console.log(e);
+        });
 
-    $(function () {
-        var onLeader;
-        $(document).keydown(function (e) {
-            if (e.keyCode === 91 || e.keyCode === 17) {
-                onLeader = true
-            } else if (e.keyCode === 13 && onLeader) {
-                put()
-            } else {
-                onLeader = false
-            }
-            return true
-        })
-    });
-
-    function put() {
-        var htmlobj = $.ajax({
-            type: 'POST', data: {data: $('#txt').val()}, async: true, success: function () {
-                window.location.href = '/clipboard/' + htmlobj.responseText
-            }
-        })
-    }
-</script>
+        function share() {
+            $.ajax({
+                url: "/clipboard/share?text=" + area_input.value, type: 'GET', async: true, success: function (result) {
+                    area_output.value = result;
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

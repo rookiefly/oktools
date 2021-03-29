@@ -25,3 +25,4 @@ INSERT INTO `oktools` VALUES ('/placeholder', 'SVG占位图', NULL, 0, 0);
 INSERT INTO `oktools` VALUES ('/tinyimg', '图片压缩', NULL, 0, 0);
 INSERT INTO `oktools` VALUES ('/json2xml', 'JSON/XML转换', NULL, 0, 0);
 INSERT INTO `oktools` VALUES ('/pdf2img', 'PDF转图片', NULL, 0, 0);
+INSERT INTO `oktools` VALUES ('/clipboard', '共享粘贴板', NULL, 0, 0);
