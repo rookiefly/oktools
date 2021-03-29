@@ -23,8 +23,10 @@ public class OkToolsController {
     private OkToolsService okToolsService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(HttpServletRequest request, Model model) {
         model.addAttribute("tools", okToolsService.queryToolsList());
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        model.addAttribute("baseUrl", baseUrl);
         return "index";
     }
 
