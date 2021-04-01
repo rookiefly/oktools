@@ -23,7 +23,7 @@ public class TextClipboardController {
     public String saveText(@RequestParam String text, HttpServletRequest request) {
         logger.info("save input text: {}", text);
         String hash = textClipboardService.saveText(text);
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String baseUrl = request.getHeader("X-Forwarded-Proto") == null ? request.getScheme() : request.getHeader("X-Forwarded-Proto") + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         return String.format("%s/clipboard/%s", baseUrl, hash);
     }
 

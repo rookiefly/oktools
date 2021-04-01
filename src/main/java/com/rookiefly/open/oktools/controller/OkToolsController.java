@@ -25,7 +25,7 @@ public class OkToolsController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) {
         model.addAttribute("tools", okToolsService.queryToolsList());
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        String baseUrl = request.getHeader("X-Forwarded-Proto") == null ? request.getScheme() : request.getHeader("X-Forwarded-Proto") + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         model.addAttribute("baseUrl", baseUrl);
         return "index";
     }
