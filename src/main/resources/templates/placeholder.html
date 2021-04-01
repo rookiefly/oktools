@@ -60,12 +60,16 @@
         <h2 class="mt-2">使用方式</h2>
         <div class="tile mt-2">
             <ul id="tips">
-                <li>http://tool.rookiefly.com/ph/[width]x[height]</li>
-                <li>http://tool.rookiefly.com/ph/[width]x[height]?t=[文字]&bg=[背景颜色]&fg=[文字颜色]</li>
+                <li>${baseUrl}/ph/[width]x[height]</li>
+                <li>${baseUrl}/ph/[width]x[height]?t=[文字]&bg=[背景颜色]&fg=[文字颜色]</li>
             </ul>
         </div>
     </div>
 </main>
+<script type="application/javascript">
+    const host = "${baseUrl}";
+</script>
+
 <script src="/js/placeholder.js"></script>
 </body>
 </html>

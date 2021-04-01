@@ -28,10 +28,8 @@ public class TextClipboardMapper {
 
     public long insert(String hash, String encodeText) {
         final String insertSql = "insert into clipboard (hash, content) values(?,?)";
-        //创建自增key的持有器
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int insertRow = jdbcTemplate.update(con -> {
-            // 获取PreparedStatement，并指定返回自增key
             PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, hash);
             Clob clob = con.createClob();
@@ -41,8 +39,6 @@ public class TextClipboardMapper {
         }, keyHolder);
 
         if (insertRow > 0) {
-            //getKey返回单一自增值
-            log.info("auto-generated key: {}", keyHolder.getKey());
             return keyHolder.getKey().longValue();
         }
         return -1L;
