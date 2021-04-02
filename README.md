@@ -1,3 +1,6 @@
+![](https://img.shields.io/badge/build-release-brightgreen.svg)  
+![](https://img.shields.io/badge/version-v1.0.0-brightgreen.svg)
+
 # oktools
 在线生产力工具集，欢迎star。
 
